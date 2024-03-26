@@ -8,10 +8,15 @@
     "@biomejs/biome": "^1.6.0",
     "@types/fluent-ffmpeg": "^2.1.24",
     "@types/node": "^20.11.25",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3"
   },
   "dependencies": {
+    "@saramorillon/http-router": "^1.0.0",
     "envalid": "^8.0.0",
-    "fluent-ffmpeg": "^2.1.2"
+    "fastify": "^4.26.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "pretty-bytes": "^6.1.1"
   }
 }
