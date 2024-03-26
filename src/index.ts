@@ -7,7 +7,7 @@ import { listRecords } from './controllers/listRecords.js'
 import { record } from './controllers/record.js'
 import { env } from './env.js'
 
-const router = new Router('http')
+const router = new Router(env.PROTOCOL)
 
 router.get('/records', listRecords)
 router.get('/record/:id', getRecord)

@@ -1,6 +1,7 @@
 import { cleanEnv, num, str, url } from 'envalid'
 
 export const env = cleanEnv(process.env, {
+  PROTOCOL: str({ default: 'https' }),
   INTERVAL: num({ default: 99000 }),
   DURATION: num({ default: 3600000 }),
   OUT_DIR: str({ default: 'out' }),
