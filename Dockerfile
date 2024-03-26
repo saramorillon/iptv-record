@@ -17,6 +17,6 @@ COPY src src
 RUN pnpm tsc
 
 RUN pnpm prune --prod
-RUN rm -rf pnpm-lock.yaml package.json tsconfig.json src
+RUN rm -rf pnpm-lock.yaml tsconfig.json src
 
 CMD ["node", "dist/index.js"]
