@@ -12,7 +12,7 @@ const router = new Router('http')
 router.get('/records', listRecords)
 router.get('/record/:id', getRecord)
 router.post('/record', record)
-router.delete('/record:id', deleteRecord)
+router.delete('/record/:id', deleteRecord)
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
   router.listen(req, res)
