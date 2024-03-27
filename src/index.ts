@@ -1,4 +1,4 @@
-import { Router } from '@saramorillon/http-router'
+import { Router, parseJsonBody } from '@saramorillon/http-router'
 import { mkdir } from 'node:fs/promises'
 import http, { type IncomingMessage, type ServerResponse } from 'node:http'
 import { deleteRecord } from './controllers/deleteRecord.js'
@@ -12,7 +12,7 @@ const router = new Router(env.PROTOCOL)
 router.get('/records', listRecords)
 router.get('/record/:id', getRecord)
 router.post('/record', record)
-router.delete('/record/:id', deleteRecord)
+router.delete('/record/:id', parseJsonBody, deleteRecord)
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
   router.listen(req, res)

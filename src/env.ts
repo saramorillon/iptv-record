@@ -1,10 +1,8 @@
-import { cleanEnv, num, str, url } from 'envalid'
+import { z } from 'zod'
 
-export const env = cleanEnv(process.env, {
-  PROTOCOL: str({ default: 'https' }),
-  INTERVAL: num({ default: 99000 }),
-  DURATION: num({ default: 3600000 }),
-  OUT_DIR: str({ default: 'out' }),
-  BASE_URL: url(),
-  M3U8_PATH: str(),
-})
+export const env = z
+  .object({
+    PROTOCOL: z.string().optional().default('https'),
+    OUT_DIR: z.string().optional().default('out'),
+  })
+  .parse(process.env)

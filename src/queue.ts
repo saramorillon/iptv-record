@@ -1,7 +1,14 @@
 import { createWriteStream, type WriteStream } from 'node:fs'
 import http from 'node:http'
 import { createInterface } from 'node:readline'
-import { env } from './env.js'
+
+interface IQueueOptions {
+  tsPath: string
+  duration: number
+  interval: number
+  m3u8Path: string
+  baseUrl: string
+}
 
 export class Queue {
   private ended = false
@@ -11,8 +18,8 @@ export class Queue {
   private output: WriteStream
   private startTime = Date.now()
 
-  constructor(tsPath: string) {
-    this.output = createWriteStream(tsPath)
+  constructor(private options: IQueueOptions) {
+    this.output = createWriteStream(this.options.tsPath)
   }
 
   async add(url: string) {
@@ -21,16 +28,16 @@ export class Queue {
   }
 
   async start() {
-    if (Date.now() - this.startTime < env.DURATION) {
+    if (Date.now() - this.startTime < this.options.duration) {
       console.log('Fetching fragments')
-      http.get(new URL(env.M3U8_PATH, env.BASE_URL), async (playlist) => {
+      http.get(new URL(this.options.m3u8Path, this.options.baseUrl), async (playlist) => {
         for await (const url of createInterface(playlist)) {
           if (url && !url.startsWith('#')) {
             void this.add(url)
           }
         }
       })
-      setTimeout(this.start.bind(this), env.INTERVAL)
+      setTimeout(this.start.bind(this), this.options.interval)
     } else {
       if (this.urls.length) {
         this.ended = true
@@ -62,7 +69,7 @@ export class Queue {
   async processUrl(url: string) {
     console.log(`Processing ${url}`)
     await new Promise<void>((resolve) => {
-      http.get(new URL(url, env.BASE_URL), (video) => {
+      http.get(new URL(url, this.options.baseUrl), (video) => {
         video
           .on('data', (chunk) => this.output.write(chunk))
           .on('error', console.error)
