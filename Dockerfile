@@ -1,7 +1,5 @@
 FROM node:20-alpine
 
-RUN apk update && apk add ffmpeg
-
 RUN npm i -g pnpm
 
 WORKDIR /app
