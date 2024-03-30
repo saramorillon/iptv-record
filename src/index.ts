@@ -2,6 +2,7 @@ import { Router, parseJsonBody } from '@saramorillon/http-router'
 import { mkdir } from 'node:fs/promises'
 import http, { type IncomingMessage, type ServerResponse } from 'node:http'
 import { deleteRecord } from './controllers/deleteRecord.js'
+import { deleteRecords } from './controllers/deleteRecords.js'
 import { getRecord } from './controllers/getRecord.js'
 import { listRecords } from './controllers/listRecords.js'
 import { record } from './controllers/record.js'
@@ -13,6 +14,7 @@ router.get('/records', listRecords)
 router.get('/record/:id', getRecord)
 router.post('/record', parseJsonBody, record)
 router.delete('/record/:id', deleteRecord)
+router.delete('/records', deleteRecords)
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
   router.listen(req, res)
