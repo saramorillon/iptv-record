@@ -11,8 +11,8 @@ const router = new Router(env.PROTOCOL)
 
 router.get('/records', listRecords)
 router.get('/record/:id', getRecord)
-router.post('/record', record)
-router.delete('/record/:id', parseJsonBody, deleteRecord)
+router.post('/record', parseJsonBody, record)
+router.delete('/record/:id', deleteRecord)
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
   router.listen(req, res)
